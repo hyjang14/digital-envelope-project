@@ -1,0 +1,74 @@
+<!--envelope.html(유언장 열람 전 홈 페이지)-->
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DIGITAL WILL</title>
+  <link rel="stylesheet" href="../css/will.css">
+  <style>
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #747474;
+      text-align: left;
+      /* margin: 0px 0 0px 0px; */
+      background: none;
+      border-bottom: none;
+    }
+    .icon-container {
+      display: flex;
+      justify-content: center;
+      margin: 120px 100px 10px;
+    }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin: 50px 30px 200px;
+    }
+    button {
+      font-size: 20px;
+      padding: 7px 7px;
+      margin: 10px 50px 10px 50px;
+      border-radius: 8px;
+    }
+    .footer-text {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      font-size: 18px;
+      color: #747474;
+      font-weight: bold;
+    }
+    .phone-frame {
+      position: relative;
+      width: 375px;
+      margin: 0 auto;
+      border: 2px solid #000;
+      border-radius: 15px;
+      overflow: hidden;
+      padding: 0px;
+      box-sizing: border-box;
+    }
+    .phone-frame .footer-text {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      color: #747474;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-frame">
+    <h1>DIGITAL WILL</h1>
+    <div class="icon-container">
+      <img src="../images/home_letter.svg" alt="유언장 아이콘" style="width: 150px; height: auto;">
+    </div>
+    <div class="button-container">
+      <button onclick="location.href='will.html'">유언장 열람하기</button>
+    </div>
+    <div class="footer-text">20220800 장하연<br>20221520 조민영</div>
+  </div>
+</body>
+</html>
