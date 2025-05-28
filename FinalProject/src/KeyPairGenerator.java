@@ -3,13 +3,14 @@ import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
+// 비대칭키 생성하기
 public class KeyPairGenerator {
 
 	public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
 		Scanner sc = new Scanner(System.in);
 
         // 소유자 입력받기
-        System.out.print("키를 생성할 소유자를 입력해주세요 (예: 고인, 상속자) : ");
+        System.out.print("키의 소유자를 입력해주세요 (예: 작성자, 상속자) : ");
         String owner = sc.nextLine().trim();
 
         // RSA 키쌍 생성하기

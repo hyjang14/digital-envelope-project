@@ -1,38 +1,34 @@
-<!--envelope.html(유언장 열람 전 홈 페이지)-->
-
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DIGITAL WILL</title>
-  <link rel="stylesheet" href="../css/will.css">
-  <style>
     h1 {
       font-size: 24px;
       font-weight: bold;
       color: #747474;
       text-align: left;
-      /* margin: 0px 0 0px 0px; */
       background: none;
       border-bottom: none;
     }
+
     .icon-container {
       display: flex;
       justify-content: center;
-      margin: 120px 100px 10px;
+      margin: 120px 100px 1px;
     }
+
     .button-container {
       display: flex;
       justify-content: center;
       margin: 50px 30px 200px;
     }
+
     button {
-      font-size: 20px;
+      font-size: 22px;
       padding: 7px 7px;
-      margin: 10px 50px 10px 50px;
+      height: 50px;
+      width: 300px;
       border-radius: 8px;
+      margin-right: 10px;
+      margin-left: -20px;
     }
+
     .footer-text {
       position: absolute;
       bottom: 10px;
@@ -41,6 +37,7 @@
       color: #747474;
       font-weight: bold;
     }
+
     .phone-frame {
       position: relative;
       width: 375px;
@@ -51,24 +48,48 @@
       padding: 0px;
       box-sizing: border-box;
     }
+
     .phone-frame .footer-text {
       position: absolute;
       bottom: 10px;
       right: 10px;
       color: #747474;
     }
-  </style>
-</head>
-<body>
-  <div class="phone-frame">
-    <h1>DIGITAL WILL</h1>
-    <div class="icon-container">
-      <img src="../images/home_letter.svg" alt="유언장 아이콘" style="width: 150px; height: auto;">
-    </div>
-    <div class="button-container">
-      <button onclick="location.href='will.html'">유언장 열람하기</button>
-    </div>
-    <div class="footer-text">20220800 장하연<br>20221520 조민영</div>
-  </div>
-</body>
-</html>
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 20% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .modal button {
+      margin-top: 15px;
+      margin-left: 1px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .modal button:hover {
+      background-color: #45a049;
+    }

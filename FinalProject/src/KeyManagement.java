@@ -21,14 +21,14 @@ Key Management
 
 public class KeyManagement {
 
-	// 대칭키 생성 (AES 알고리즘 사용)
+	// 대칭키 생성 -> AES 알고리즘 사용
     public static SecretKey generateAESKey() throws NoSuchAlgorithmException {
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(128);
         return keyGen.generateKey();
     }
     
-	// 비대칭키 생성 (RSA 알고리즘 사용)
+	// 비대칭키 생성 -> RSA 알고리즘 사용
     public static KeyPair generateRSAKeyPair() throws NoSuchAlgorithmException {
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
         keyGen.initialize(1024);

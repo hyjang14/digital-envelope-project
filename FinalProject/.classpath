@@ -6,5 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/hhayo/Desktop/ddwu4/webcode/FinalProject/lib/jsoup-1.20.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

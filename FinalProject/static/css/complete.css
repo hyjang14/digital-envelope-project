@@ -1,0 +1,35 @@
+    .phone-frame {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 670px;
+      padding: 170px 20px 50px 20px;
+      /* 상단 여백  */
+      box-sizing: border-box;
+    }
+
+    .success-icon {
+      width: 100px;
+      margin-top: 150px;
+
+      margin-bottom: 50px;
+      /* 이미지 아래 여백 */
+    }
+
+    .check {
+      padding-bottom: 30px;
+    }
+
+    .center-button {
+      padding: 9px 10px;
+      font-size: 20px;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-bottom: 180px;
+      /* 버튼 아래 여백  */
+    }

@@ -9,7 +9,8 @@ body {
 
 .phone-frame {
   position: relative;
-  width: 375px;
+  width: 430px;
+  height: 670px;
   background: #ffffff;
   border: 2px solid #333;
   border-radius: 15px;
@@ -39,6 +40,26 @@ body {
   z-index: 2;
 }
 
+.title-with-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #3D3D3D;
+  color: white;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 2px solid #ccc;
+  box-sizing: border-box;
+}
+
+.title-icon {
+  width: 30px;
+  height: 30px;
+}
+
+
 h1 {
   background-color: #3D3D3D;
   color: white;
@@ -49,6 +70,11 @@ h1 {
 }
 
 .section {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.section_p {
   padding: 15px 20px;
   border-bottom: 1px solid #eee;
 }
@@ -64,8 +90,18 @@ h1 {
   background: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 5px;
+  height: 370px;
   padding: 10px;
   white-space: pre-wrap;
+}
+
+.content-box2 {
+  height: 280px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px 0 0 16px; /* 위, 오른쪽, 아래, 왼쪽 */
+
 }
 
 button {
@@ -85,4 +121,19 @@ input:focus,
 button:focus {
   outline: none;
   box-shadow: none;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  font-size: 25px;
+  padding: 7px 7px;
+  height: 50px;
+  width: 300px;
+  border-radius: 8px;
+  margin-right: 10px;
+  margin-left: -20px;
 }

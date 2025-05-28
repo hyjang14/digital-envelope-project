@@ -1,26 +1,26 @@
+import java.awt.Desktop;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyFactory;
-import java.security.MessageDigest;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
 import java.util.Scanner;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-// 유언장 해독 및 검증하기
+// 유언장 해독 및 검증하기 (복호화)
 public class VerifyEnvelope {
 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
 
-        // 상속자만 열 수 있으므로
+        // 상속자만 열 수 있으므로 -> 본인인증 과정
         System.out.print("1. 상속자의 개인키 파일명을 입력해주세요: ");
         String heritorPrivateKeyFile = sc.nextLine();
 
@@ -30,14 +30,11 @@ public class VerifyEnvelope {
         System.out.print("3. 암호화된 대칭키 파일명을 입력해주세요: ");
         String encryptedKeyFile = sc.nextLine();
 
-        System.out.print("4. 원본 유언장의 해시값 파일명을 입력해주세요: ");
-        String hashFile = sc.nextLine();
-
         // 전자서명 검증을 위해
-        System.out.print("5. 고인의 공개키 파일명을 입력해주세요: ");
+        System.out.print("4. 작성자의 공개키 파일명을 입력해주세요: ");
         String writerPublicKeyFile = sc.nextLine();
 
-        System.out.print("6. 전자서명 파일명을 입력해주세요: ");
+        System.out.print("5. 작성자의 전자서명 파일명을 입력해주세요: ");
         String signatureFile = sc.nextLine();
 
         // 1. 상속자의 개인키 불러오기
@@ -58,62 +55,64 @@ public class VerifyEnvelope {
         aesCipher.init(Cipher.DECRYPT_MODE, aesKey);
         byte[] originalData = aesCipher.doFinal(encryptedData);
 
-        // 3. 해시 검증(유언장 변조 여부 확인) -> 현재 해시값 계산하기
-        byte[] expectedHash = Base64.getDecoder().decode(Files.readAllBytes(Paths.get(hashFile)));
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] actualHash = digest.digest(originalData);
-
-        System.out.println("\n==========================================");
-        
-        // 기존 해시값과 해시값 비교
-        String hashResult = "";
-        
-        if (MessageDigest.isEqual(expectedHash, actualHash)) {
-        	hashResult = "유언장이 변조되지 않았습니다.";
-            System.out.println("- 해시 검증 성공:" + hashResult);
-        } else {
-        	hashResult = "유언장이 변조되었습니다.";
-        	System.out.println("- 해시 검증 실패:" + hashResult);
-            return;
-        }
-
-        // 4. 고인 공개키로 전자서명 검증(본인 인증-부인 방지)
-        // 고인의 공개키 불러오기
+        // 3. 작성자의 공개키로 전자서명 검증(본인 인증-부인 방지)
+        // 작성자의 공개키 불러오기
         byte[] publicKeyBytes = Files.readAllBytes(Paths.get(writerPublicKeyFile));
         
         PublicKey publicKey = KeyFactory.getInstance("RSA")
                 .generatePublic(new X509EncodedKeySpec(publicKeyBytes));
 
+        // 전자서명 파일 읽기
         byte[] signatureBytes = Files.readAllBytes(Paths.get(signatureFile));
+        
+        // 전자서명 검증
         Signature signature = Signature.getInstance("SHA256withRSA");
         signature.initVerify(publicKey);
         signature.update(originalData);
 
         // 서명 검증 결과 출력
         String signatureResult = "";
-        
-        if (signature.verify(signatureBytes)) {
-        	signatureResult = "유언장이 고인에 의해 작성되었습니다.";
-            System.out.println("- 전자서명 검증 성공:" + signatureResult);
-        } else {
-        	signatureResult = "고인의 서명과 일치하지 않습니다.";
-            System.out.println("- 전자서명 검증 실패:" + signatureResult);
-            return;
+
+        boolean isVerified = false;
+        try {
+            isVerified = signature.verify(signatureBytes);
+        } catch (Exception e) {
+            isVerified = false;
         }
 
-        // 5. 복호화된 유언장 출력
-        String willContent = new String(originalData);
-        
-        System.out.println("==========================================");
-        System.out.println("[복호화된 유언장 내용]");
-        System.out.println("==========================================");
- 
-        System.out.println(willContent);
-        
-        System.out.println("==========================================\n");
-        
-        // 복호화 결과 HTML로 생성하기
-        HtmlGenerator.generateHtml(hashResult, signatureResult, willContent);
+        if (isVerified) {
+            signatureResult = "상속자 본인 확인이 완료되었습니다.\r\n"
+                    + "유언장 검증이 성공적으로 완료되었습니다.\r\n"
+                    + "유언장이 위조 및 변조되지 않았습니다.";
+            
+            System.out.println("\n- 전자서명 검증 성공:" + signatureResult + "\n");
+
+            // 4. 복호화된 유언장 콘솔에 출력
+            String willContent = new String(originalData);
+
+            System.out.println("==========================================");
+            System.out.println("[복호화된 유언장 내용]");
+            System.out.println("==========================================");
+
+            System.out.println(willContent);
+
+            System.out.println("==========================================\n");
+
+            // 복호화 결과를 html로 생성
+            HtmlGenerator_willContent.generateHtml(willContent, signatureResult);
+            
+        } else {
+            signatureResult = "디지털 유언장 검증 실패";
+            System.out.println("\n- 전자서명 검증 실패: " + signatureResult + "\n");
+
+            File htmlFile = new File("static/html/verificationFalse.html");
+
+            if (htmlFile.exists()) {
+                Desktop.getDesktop().browse(htmlFile.toURI());
+            } else {
+                System.out.println("파일이 존재하지 않음.");
+            }
+        }
         
         sc.close();
     }
