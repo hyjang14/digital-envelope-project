@@ -43,6 +43,7 @@ public class CreateEnvelope {
         // 3. 생성된 대칭키로 원본 유언장 암호화하기 -> 암호화된 유언장 생성
         Cipher aesCipher = Cipher.getInstance("AES");
         aesCipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        
         byte[] encryptedData = aesCipher.doFinal(data);
         Files.write(Paths.get(secretWillFile), encryptedData);
 

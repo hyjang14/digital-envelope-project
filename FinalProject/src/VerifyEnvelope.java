@@ -78,6 +78,7 @@ public class VerifyEnvelope {
             isVerified = signature.verify(signatureBytes);
         } catch (Exception e) {
             isVerified = false;
+            throw new RuntimeException("전자서명 검증 중 오류 발생", e);
         }
 
         if (isVerified) {
